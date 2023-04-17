@@ -5,13 +5,16 @@ import './index.css';
 import 'tailwindcss/tailwind.css';
 
 import App from './App';
+import { ThemeContextProvider } from './contexts';
 
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
   root.render(
     <StrictMode>
-      <App />
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
     </StrictMode>
   );
 }
