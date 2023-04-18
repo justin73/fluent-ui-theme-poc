@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unused-modules */
 type BasicTheme = {
   palette: {
     themePrimary: string;
@@ -25,7 +26,8 @@ type BasicTheme = {
   };
 };
 
-export const light: BasicTheme = {
+// base theme
+export const baselight: BasicTheme = {
   palette: {
     themePrimary: '#128712',
     themeLighterAlt: '#f1faf1',
@@ -52,7 +54,34 @@ export const light: BasicTheme = {
   },
 };
 
-export const dark: BasicTheme = {
+export const baseDark: BasicTheme = {
+  palette: {
+    themePrimary: '#0dbd0d',
+    themeLighterAlt: '#010801',
+    themeLighter: '#021e02',
+    themeLight: '#043904',
+    themeTertiary: '#087108',
+    themeSecondary: '#0ca60c',
+    themeDarkAlt: '#20c320',
+    themeDark: '#3ccd3c',
+    themeDarker: '#68da68',
+    neutralLighterAlt: '#323232',
+    neutralLighter: '#313131',
+    neutralLight: '#2f2f2f',
+    neutralQuaternaryAlt: '#2c2c2c',
+    neutralQuaternary: '#2a2a2a',
+    neutralTertiaryAlt: '#282828',
+    neutralTertiary: '#c8c8c8',
+    neutralSecondary: '#d0d0d0',
+    neutralPrimaryAlt: '#dadada',
+    neutralPrimary: '#ffffff',
+    neutralDark: '#f4f4f4',
+    black: '#f8f8f8',
+    white: '#333333',
+  },
+};
+
+export const baseHightContrast: BasicTheme = {
   palette: {
     themePrimary: '#0dbd0d',
     themeLighterAlt: '#010801',
@@ -108,72 +137,139 @@ type CompoundTheme = {
 
 export type CustomThemeType = BasicTheme & CompoundTheme;
 
-export const mix: CustomThemeType = {
-  ...dark,
+// compound theme
+export const dark: CustomThemeType = {
+  ...baseDark,
   colorSet: {
     generic: {
       // popovers
       // dialogs
       zoneDialog: {
-        ...dark,
+        ...baseDark,
       },
       zonePopover: {
-        ...light,
+        ...baseDark,
       },
     },
     dashboard: {
-      zone1: { ...dark },
-      zone2: { ...dark },
-      zone3: { ...light },
+      zone1: { ...baseDark },
+      zone2: { ...baseDark },
+      zone3: { ...baseDark },
     },
     nlu: {
-      zone1: { ...dark },
-      zone2: { ...dark },
-      zone3: { ...light },
-      zone4: { ...light },
+      zone1: { ...baseDark },
+      zone2: { ...baseDark },
+      zone3: { ...baseDark },
+      zone4: { ...baseDark },
     },
     dialog: {
-      zone1: { ...dark },
-      zone2: { ...dark },
-      zone3: { ...light },
-      zone4: { ...dark },
-      zone5: { ...dark },
+      zone1: { ...baseDark },
+      zone2: { ...baseDark },
+      zone3: { ...baseDark },
+      zone4: { ...baseDark },
+      zone5: { ...baseDark },
     },
   },
 };
 
+export const light: CustomThemeType = {
+  ...baselight,
+  colorSet: {
+    generic: {
+      // popovers
+      // dialogs
+      zoneDialog: {
+        ...baselight,
+      },
+      zonePopover: {
+        ...baselight,
+      },
+    },
+    dashboard: {
+      zone1: { ...baselight },
+      zone2: { ...baselight },
+      zone3: { ...baselight },
+    },
+    nlu: {
+      zone1: { ...baselight },
+      zone2: { ...baselight },
+      zone3: { ...baselight },
+      zone4: { ...baselight },
+    },
+    dialog: {
+      zone1: { ...baselight }, // we can use more descriptive naming
+      zone2: { ...baselight },
+      zone3: { ...baselight },
+      zone4: { ...baselight },
+      zone5: { ...baselight },
+    },
+  },
+};
 
+export const blend: CustomThemeType = {
+  ...baseDark,
+  colorSet: {
+    generic: {
+      // popovers
+      // dialogs
+      zoneDialog: {
+        ...baseDark,
+      },
+      zonePopover: {
+        ...baseDark,
+      },
+    },
+    dashboard: {
+      zone1: { ...baseDark },
+      zone2: { ...baseDark },
+      zone3: { ...baselight },
+    },
+    nlu: {
+      zone1: { ...baseDark },
+      zone2: { ...baseDark },
+      zone3: { ...baseDark },
+      zone4: { ...baselight },
+    },
+    dialog: {
+      zone1: { ...baselight },
+      zone2: { ...baseDark },
+      zone3: { ...baselight },
+      zone4: { ...baselight },
+      zone5: { ...baseDark },
+    },
+  },
+};
 
-// export const tdBank: CustomThemeType = {
-//   ...dark,
-//   colorSet: {
-//     generic: {
-//       // popovers
-//       // dialogs
-//       zoneDialog: {
-//         ...dark,
-//       },
-//       zonePopover: {
-//         ...light,
-//       },
-//     },
-//     dashboard: {
-//       zone1: { ...dark },
-//       zone2: { ...dark },
-//       zone3: { ...light },
-//     },
-//     nlu: {
-//       zone1: { ...dark },
-//       zone2: { ...dark },
-//       zone3: { ...light },
-//       zone4: { ...light },
-//     },
-//     dialog: {
-//       zone1: { ...dark },
-//       zone2: { ...dark },
-//       zone3: { ...light },
-//       zone4: { ...dark },
-//       zone5: { ...dark },
-//     },
-//   },
-// };
+export const hightContrast: CustomThemeType = {
+  ...baseHightContrast,
+  colorSet: {
+    generic: {
+      // popovers
+      // dialogs
+      zoneDialog: {
+        ...baseHightContrast,
+      },
+      zonePopover: {
+        ...baseHightContrast,
+      },
+    },
+    dashboard: {
+      zone1: { ...baseHightContrast },
+      zone2: { ...baseHightContrast },
+      zone3: { ...baseHightContrast },
+    },
+    nlu: {
+      zone1: { ...baseHightContrast },
+      zone2: { ...baseHightContrast },
+      zone3: { ...baseHightContrast },
+      zone4: { ...baseHightContrast },
+    },
+    dialog: {
+      zone1: { ...baseHightContrast }, // we can use more descriptive naming
+      zone2: { ...baseHightContrast },
+      zone3: { ...baseHightContrast },
+      zone4: { ...baseHightContrast },
+      zone5: { ...baseHightContrast },
+    },
+  },
+};

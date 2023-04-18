@@ -7,8 +7,9 @@ import {
   useId,
   makeStyles,
 } from '@fluentui/react-components';
+import { ThemeProvider } from '@fluentui/react';
 
-import { useLayoutContext, useThemeContext } from '../contexts';
+import { useThemeContext } from '../contexts';
 import { useTheme } from '../hooks/useTheme';
 
 const useStyles = makeStyles({
@@ -27,43 +28,31 @@ const useStyles = makeStyles({
 
 export const Navigation: React.FC = () => {
   const styles = useStyles();
-  const layoutId = useId('layout');
   const themeId = useId('theme');
   const { currentThemeValue } = useThemeContext();
-  const { currentPageLayout, handleSwitchPageLayout } = useLayoutContext();
   const { handleThemeSwitch } = useTheme();
+  const { currentTheme } = useTheme();
 
   return (
-    <div className={styles.navigation}>
-      Navigation Bar
-      <div className={styles.themeSwitcher}>
-        <Label id={layoutId}>Layout</Label>
-        <RadioGroup
-          layout="horizontal"
-          value={currentPageLayout}
-          onChange={(e: React.FormEvent<HTMLDivElement>): void => {
-            handleSwitchPageLayout((e.target as HTMLInputElement).value);
-          }}
-        >
-          <Radio value="dialog" label="Dialog Layout" />
-          <Radio value="dashboard" label="Dashboard Layout" />
-          <Radio value="nlu" label="NLU Layout" />
-        </RadioGroup>
+    <ThemeProvider theme={currentTheme?.colorSet?.dialog.zone1}>
+      <div className={styles.navigation}>
+        Navigation Bar
+        <div className={styles.themeSwitcher}>
+          <Label id={themeId}>Theme</Label>
+          <RadioGroup
+            layout="horizontal"
+            value={currentThemeValue}
+            onChange={(e: React.FormEvent<HTMLDivElement>): void => {
+              handleThemeSwitch((e.target as HTMLInputElement).value);
+            }}
+          >
+            <Radio value="light" label="Light" />
+            <Radio value="dark" label="Dark" />
+            <Radio value="blend" label="Mix" />
+            <Radio value="highContrast" label="High Contrast" />
+          </RadioGroup>
+        </div>
       </div>
-      <div className={styles.themeSwitcher}>
-        <Label id={themeId}>Theme</Label>
-        <RadioGroup
-          layout="horizontal"
-          value={currentThemeValue}
-          onChange={(e: React.FormEvent<HTMLDivElement>): void => {
-            handleThemeSwitch((e.target as HTMLInputElement).value);
-          }}
-        >
-          <Radio value="light" label="Light" />
-          <Radio value="dark" label="Dark" />
-          <Radio value="mix" label="Mix" />
-        </RadioGroup>
-      </div>
-    </div>
+    </ThemeProvider>
   );
 };

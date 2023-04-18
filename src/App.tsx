@@ -7,10 +7,10 @@ import { useTheme } from 'hooks/useTheme';
 import { LayoutContextProvider } from 'contexts';
 
 const App: React.FC = () => {
-  const { currentBaseTheme } = useTheme();
+  const { currentTheme } = useTheme();
 
   return (
-    <ThemeProvider applyTo="body" theme={currentBaseTheme}>
+    <ThemeProvider applyTo="body" theme={currentTheme}>
       <LayoutContextProvider>
         <Navigation />
         <Page />

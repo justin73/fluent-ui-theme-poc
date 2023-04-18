@@ -3,55 +3,36 @@ import { useThemeContext } from 'contexts';
 
 export const useTheme = () => {
   const {
-    setUseDarkMode,
-    setUseCustomMode,
+    currentThemeValue,
     setCurrentThemeValue,
-    useCustomTheme,
-    useDarkMode,
     lightTheme,
     darkTheme,
-    mixTheme,
-    setCompoundTheme,
-    compoundTheme,
+    blendTheme,
+    highContrastTheme,
   } = useThemeContext();
 
   const handleThemeSwitch = useCallback(
-    (theme: string) => {
-      setCurrentThemeValue(theme);
-
-      switch (theme) {
-        case 'light':
-          setUseCustomMode(false);
-          setUseDarkMode(false);
-          return;
-        case 'dark':
-          setUseCustomMode(false);
-          setUseDarkMode(true);
-          return;
-        case 'mix':
-          setUseDarkMode(false);
-          setUseCustomMode(true);
-          setCompoundTheme(mixTheme);
-          return;
-      }
-    },
-    [setCurrentThemeValue, setUseCustomMode, setUseDarkMode, setCompoundTheme, mixTheme]
+    (theme: string) => setCurrentThemeValue(theme),
+    [setCurrentThemeValue]
   );
 
-  const currentBaseTheme = useMemo(() => {
-    // basic is either dark or light
-    const basicTheme = useDarkMode ? darkTheme : lightTheme;
-    // mix theme is a combination of dark and light
-    // but the fundation is dark so if mix is selected, then the fundation theme in this case will be dark
-    // and all we need to do is to override certain zone in the app to use light theme
-    return useCustomTheme ? compoundTheme : basicTheme;
-  }, [useDarkMode, darkTheme, lightTheme, useCustomTheme, compoundTheme]);
+  const currentTheme = useMemo(() => {
+    switch (currentThemeValue) {
+      case 'light':
+        return lightTheme;
+      case 'dark':
+        return darkTheme;
+      case 'blend':
+        return blendTheme;
+      default:
+        return highContrastTheme;
+    }
+  }, [blendTheme, currentThemeValue, darkTheme, highContrastTheme, lightTheme]);
 
   return {
     handleThemeSwitch,
     lightTheme,
     darkTheme,
-    currentBaseTheme,
-    compoundTheme,
+    currentTheme,
   };
 };

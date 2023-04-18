@@ -13,7 +13,6 @@ import {
 } from '@fluentui/react-components';
 import { CalendarMonthRegular, ArrowReplyRegular, ShareRegular } from '@fluentui/react-icons';
 
-import { useThemeContext } from '../contexts';
 import { useTheme } from 'hooks/useTheme';
 
 const useStyles = makeStyles({
@@ -43,12 +42,11 @@ const resolveAsset = (asset: string) => {
 
 export const Content: React.FC = () => {
   const styles = useStyles();
-  const { useCustomTheme, compoundTheme } = useThemeContext();
-  const { currentBaseTheme } = useTheme();
+  const { currentTheme } = useTheme();
 
   return (
     <ThemeProvider
-      theme={useCustomTheme ? compoundTheme.colorSet?.dialog.zone3 : currentBaseTheme}
+      theme={currentTheme?.colorSet?.dialog.zone3}
       className={styles.themeProviderWrapper}
     >
       <div className={styles.content} id="content">

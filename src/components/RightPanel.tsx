@@ -1,6 +1,8 @@
 import React from 'react';
 import { makeStyles, shorthands } from '@fluentui/react-components';
+import { ThemeProvider } from '@fluentui/react';
 
+import { useTheme } from 'hooks/useTheme';
 const useStyles = makeStyles({
   rightPanel: {
     height: '100%',
@@ -14,6 +16,11 @@ const useStyles = makeStyles({
 
 export const RightPanel: React.FC = () => {
   const styles = useStyles();
+  const { currentTheme } = useTheme();
 
-  return <div className={styles.rightPanel}> right panel</div>;
+  return (
+    <ThemeProvider theme={currentTheme.colorSet?.dialog.zone2}>
+      <div className={styles.rightPanel}> right panel</div>;
+    </ThemeProvider>
+  );
 };

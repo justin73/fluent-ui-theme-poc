@@ -1,5 +1,8 @@
 import React from 'react';
 import { makeStyles, shorthands } from '@fluentui/react-components';
+import { ThemeProvider } from '@fluentui/react';
+
+import { useTheme } from 'hooks/useTheme';
 
 const useStyles = makeStyles({
   leftPanel: {
@@ -14,6 +17,11 @@ const useStyles = makeStyles({
 
 export const LeftPanel: React.FC = () => {
   const styles = useStyles();
+  const { currentTheme } = useTheme();
 
-  return <div className={styles.leftPanel}> left panel</div>;
+  return (
+    <ThemeProvider theme={currentTheme.colorSet?.dialog.zone2}>
+      <div className={styles.leftPanel}> left panel</div>
+    </ThemeProvider>
+  );
 };

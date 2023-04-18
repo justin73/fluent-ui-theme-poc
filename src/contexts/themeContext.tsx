@@ -7,22 +7,17 @@ import React, {
   useContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import { createTheme, Theme } from '@fluentui/theme';
+import { createTheme } from '@fluentui/theme';
 
-import { light, dark, mix, CustomThemeType } from '../themes';
+import { light, dark, blend, hightContrast } from '../themes';
 
 type ThemeConextType = {
-  useDarkMode: boolean;
-  useCustomTheme: boolean;
   currentThemeValue: string;
-  compoundTheme: CustomThemeType;
-  setUseDarkMode: Dispatch<SetStateAction<boolean>>;
-  setUseCustomMode: Dispatch<SetStateAction<boolean>>;
   setCurrentThemeValue: Dispatch<SetStateAction<string>>;
-  setCompoundTheme: Dispatch<SetStateAction<Theme>>;
   lightTheme: ReturnType<typeof createTheme>;
   darkTheme: ReturnType<typeof createTheme>;
-  mixTheme: ReturnType<typeof createTheme>;
+  blendTheme: ReturnType<typeof createTheme>;
+  highContrastTheme: ReturnType<typeof createTheme>;
 };
 
 type ThemeContextProviderPropType = {
@@ -32,32 +27,24 @@ type ThemeContextProviderPropType = {
 // extract as a constant file
 const lightTheme = createTheme(light);
 const darkTheme = createTheme(dark);
-const mixTheme = createTheme(mix);
+const blendTheme = createTheme(blend);
+const highContrastTheme = createTheme(hightContrast);
 
 export const ThemeContext = createContext({} as ThemeConextType);
 
 export const ThemeContextProvider = ({ children }: ThemeContextProviderPropType) => {
-  const [useDarkMode, setUseDarkMode] = useState(false);
-  const [useCustomTheme, setUseCustomMode] = useState(false);
-  const [compoundTheme, setCompoundTheme] = useState(mixTheme);
-
   const [currentThemeValue, setCurrentThemeValue] = useState('light');
 
   const value = useMemo(() => {
     return {
-      useDarkMode,
-      setUseDarkMode,
-      useCustomTheme,
-      setUseCustomMode,
       currentThemeValue,
       setCurrentThemeValue,
-      setCompoundTheme,
-      compoundTheme,
       lightTheme,
       darkTheme,
-      mixTheme,
+      blendTheme,
+      highContrastTheme,
     };
-  }, [compoundTheme, currentThemeValue, useCustomTheme, useDarkMode]);
+  }, [currentThemeValue]);
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };
