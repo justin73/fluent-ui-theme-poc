@@ -43,12 +43,12 @@ const resolveAsset = (asset: string) => {
 
 export const Content: React.FC = () => {
   const styles = useStyles();
-  const { useMixMode } = useThemeContext();
-  const { currentBaseTheme, lightTheme } = useTheme();
+  const { useCustomTheme, compoundTheme } = useThemeContext();
+  const { currentBaseTheme } = useTheme();
 
   return (
     <ThemeProvider
-      theme={useMixMode ? lightTheme : currentBaseTheme}
+      theme={useCustomTheme ? compoundTheme.colorSet?.dialog.zone3 : currentBaseTheme}
       className={styles.themeProviderWrapper}
     >
       <div className={styles.content} id="content">

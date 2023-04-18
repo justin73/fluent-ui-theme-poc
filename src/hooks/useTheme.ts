@@ -4,12 +4,15 @@ import { useThemeContext } from 'contexts';
 export const useTheme = () => {
   const {
     setUseDarkMode,
-    setUseMixMode,
+    setUseCustomMode,
     setCurrentThemeValue,
-    useMixMode,
+    useCustomTheme,
     useDarkMode,
     lightTheme,
     darkTheme,
+    mixTheme,
+    setCompoundTheme,
+    compoundTheme,
   } = useThemeContext();
 
   const handleThemeSwitch = useCallback(
@@ -18,20 +21,21 @@ export const useTheme = () => {
 
       switch (theme) {
         case 'light':
-          setUseMixMode(false);
+          setUseCustomMode(false);
           setUseDarkMode(false);
           return;
         case 'dark':
-          setUseMixMode(false);
+          setUseCustomMode(false);
           setUseDarkMode(true);
           return;
         case 'mix':
           setUseDarkMode(false);
-          setUseMixMode(true);
+          setUseCustomMode(true);
+          setCompoundTheme(mixTheme);
           return;
       }
     },
-    [setCurrentThemeValue, setUseDarkMode, setUseMixMode]
+    [setCurrentThemeValue, setUseCustomMode, setUseDarkMode, setCompoundTheme, mixTheme]
   );
 
   const currentBaseTheme = useMemo(() => {
@@ -40,13 +44,14 @@ export const useTheme = () => {
     // mix theme is a combination of dark and light
     // but the fundation is dark so if mix is selected, then the fundation theme in this case will be dark
     // and all we need to do is to override certain zone in the app to use light theme
-    return useMixMode ? darkTheme : basicTheme;
-  }, [darkTheme, lightTheme, useDarkMode, useMixMode]);
+    return useCustomTheme ? compoundTheme : basicTheme;
+  }, [useDarkMode, darkTheme, lightTheme, useCustomTheme, compoundTheme]);
 
   return {
     handleThemeSwitch,
     lightTheme,
     darkTheme,
     currentBaseTheme,
+    compoundTheme,
   };
 };
